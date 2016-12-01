@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class OOValidator {
-    static int getInt(String prompt){
+    public static int getInt(String prompt){
         Scanner sc = new Scanner(System.in);
         System.out.println(prompt);
         int value;
@@ -88,7 +88,7 @@ public class OOValidator {
         System.out.println(prompt);
         String input;
         try{
-            input = sc.next();
+            input = sc.next() + sc.nextLine();
             if(input.equalsIgnoreCase("")){
                 throw new InputMismatchException();
             } else {

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import utilities.OOValidator;
 
+
 public class StudentRecordApp{
     static private List<Student> studentList = new ArrayList<>();
 

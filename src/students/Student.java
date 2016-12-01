@@ -13,6 +13,7 @@ class Student {
         this.score = score;
     }
 }
+
 class lastNameComparator implements Comparator<Student>{
     @Override
     public int compare(Student a, Student b){
@@ -29,6 +30,7 @@ class lastNameComparator implements Comparator<Student>{
         return toReturn;
     }
 }
+
 class scoreComparator implements Comparator<Student>{
     @Override
     public int compare(Student a, Student b){
