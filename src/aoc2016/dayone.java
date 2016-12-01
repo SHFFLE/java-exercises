@@ -3,10 +3,18 @@ package aoc2016;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 // It's ugly and it's proud!
-// Seriously though this solution is absolutely terrible, but functional. Because I'm able to actively manipulate the code, it works for my purposes
-// And gives the correct answer. It's just really ugly - I actually had to grab the first crossover manually because this setup lists all of them (in order)
+// Visualizes using commas for blank spots, and @ for the actual path travelled. I could doll it up, if I wanted, but I was curious about
+// displaying a grid pattern using input. As it turns out, of course, 2d arrays work quite nicely for this :P
+// You'll want to zoom out on the visualization though and/or import it into a text editor with a monospace font and switch the font size
+// to something significantly smaller, because it is massive. Also you have to change the input string manually, but it should work for any input.
+// If you get an out of bounds exception, change the map size variable to something higher than it already is.
+
 public class dayone {
+    private static int crossoverX = 0;
+    private static int crossoverY = 0;
     public static void main(String[] args) {
         String input = "R4, R3, R5, L3, L5, R2, L2, R5, L2, R5, R5, R5, R1, R3, L2, L2, L1, R5, L3, R1, L2, R1, L3, L5, L1, R3, L4, R2, R4, L3, L1, R4, L4, R3, L5, L3, R188, R4, L1, R48, L5, R4, R71, R3, L2, R188, L3, R2, L3, R3, L5, L1, R1, L2, L4, L2, R5, L3, R3, R3, R4, L3, L4, R5, L4, L4, R3, R4, L4, R1, L3, L1, L1, R4, R1, L4, R1, L1, L3, R2, L2, R2, L1, R5, R3, R4, L5, R2, R5, L5, R1, R2, L1, L3, R3, R1, R3, L4, R4, L4, L1, R1, L2, L2, L4, R1, L3, R4, L2, R3, L1, L5, R4, R5, R2, R5, R1, R5, R1, R3, L3, L2, L2, L5, R2, L2, R5, R5, L2, R3, L5, R5, L2, R4, R2, L1, R3, L5, R3, R2, R5, L1, R3, L2, R2, R1";
         String[] inputArray = input.split(", ");
@@ -14,116 +22,112 @@ public class dayone {
         char orientation = 'n';
         int xCoordinate = 0;
         int yCoordinate = 0;
-        int crossoverX = 0;
-        int crossoverY = 0;
+
         for(int i = 0; i < inputArray.length; i++) {
             if(inputArray[i].charAt(0) == 'R'){
                 switch (orientation){
                     case 'n':
                         orientation = 'e';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             xCoordinate ++;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 'e':
                         orientation = 's';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             yCoordinate --;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 's':
                         orientation = 'w';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             xCoordinate --;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 'w':
                         orientation = 'n';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             yCoordinate ++;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                 }
             } else {
                 switch (orientation){
                     case 'n':
                         orientation = 'w';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             xCoordinate --;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 'e':
                         orientation = 'n';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             yCoordinate ++;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 's':
                         orientation = 'e';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             xCoordinate ++;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                     case 'w':
                         orientation = 's';
-                        for (int j = 0; j < Integer.parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
+                        for (int j = 0; j < parseInt(inputArray[i].substring(1, inputArray[i].length())); j++) {
                             yCoordinate --;
-                            if(CoordArrayList.contains(xCoordinate + ", " + yCoordinate)){
-                                System.out.println("Crossover at " + xCoordinate + ", " + yCoordinate);
-                                crossoverX = xCoordinate;
-                                crossoverY = yCoordinate;
-                            }
-                            CoordArrayList.add(xCoordinate + ", " + yCoordinate);
+                            checkForCrossover(CoordArrayList, xCoordinate, yCoordinate);
                         }
-                        continue;
+                        break;
                 }
             }
         }
+        prepVisualize(CoordArrayList);
         System.out.println(xCoordinate + " " + yCoordinate);
         int distance = Math.abs(0 - xCoordinate) + Math.abs(0 - yCoordinate);
         System.out.println(distance);
-        System.out.println("Crossover is " + (Math.abs(0 - 129) + Math.abs(0 - -24)));
+        System.out.println("Crossover is " + (Math.abs(0 - crossoverX) + Math.abs(0 - crossoverY)));
+    }
+
+    private static void checkForCrossover(List<String> coordArrayList, int xCoordinate, int yCoordinate) {
+        if(coordArrayList.contains(xCoordinate + ", " + yCoordinate)){
+            if(crossoverX == 0 && crossoverY == 0){
+                crossoverX = xCoordinate;
+                crossoverY = yCoordinate;
+            }
+        }
+        coordArrayList.add(xCoordinate + ", " + yCoordinate);
+    }
+
+    private static void prepVisualize(List<String> coordArrayList){
+        int mapsize = 500;
+        String[][] map = new String[mapsize][mapsize];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                map[i][j] = ",";
+            }
+        }
+        for (int i = 0; i < coordArrayList.size(); i++) {
+            String[] currentCoord = coordArrayList.get(i).split(", ");
+            int xCoord = parseInt(currentCoord[0]) + mapsize/2;
+            int yCoord = parseInt(currentCoord[1]) + mapsize/2;
+            map[yCoord][xCoord] = "@";
+        }
+        visualize(map);
+    }
+
+    private static void visualize(String[][] map){
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                System.out.print(map[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
