@@ -1,8 +1,8 @@
 package movies;
 
-public class MovieIO
+class MovieIO
 {
-    public static Movie getMovie(int index)
+    static Movie getMovie(int index)
     {
         switch (index)
         {

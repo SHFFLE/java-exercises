@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Movie {
+class Movie {
     static List<Movie> movieList = new ArrayList<>();
     static String[] categoryArray = {"animated", "comedy", "drama", "horror", "musical", "scifi"};
     String title;
