@@ -74,8 +74,6 @@ public class IOApplication {
                 out.println(output);
                 out.close();
                 System.err.println("Removed!");
-            } else {
-                System.out.println("Goodbye!");
             }
         } while (OOValidator.continueDoing("Continue?"));
 

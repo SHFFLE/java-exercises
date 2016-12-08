@@ -1035,8 +1035,7 @@ public class dayfour {
                 }
             }
             String properCode = "";
-            char key = ' ';
-            int maxValueInMap=(Collections.max(charmap.values()));  // This will return max value in the Hashmap
+            char key;
             for (int j = 0; j < 5; j++) {
                 Map.Entry<Character, Integer> maxEntry = null;
                 for (Map.Entry<Character, Integer> entry : charmap.entrySet()) {
