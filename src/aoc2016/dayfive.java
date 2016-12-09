@@ -16,7 +16,6 @@ public class dayfive {
             String inputString = input + i;
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.update(StandardCharsets.UTF_8.encode(inputString));
-            System.out.println(i);
             i++;
             String hashed = String.format("%032x", new BigInteger(1, md5.digest()));
             if(hashed.startsWith("00000")){
